@@ -4,4 +4,7 @@ type Distance float32
 
 type Coordinate float32
 
-type CoordinatePair [2]Coordinate
+type CoordinatePair struct {
+	X Coordinate
+	Y Coordinate
+}
