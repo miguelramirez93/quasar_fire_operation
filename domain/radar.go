@@ -5,6 +5,7 @@ import (
 
 	"github.com/miguelramirez93/quasar_fire_operation/shared/models"
 	"github.com/miguelramirez93/quasar_fire_operation/shared/utils/logger"
+	"github.com/miguelramirez93/quasar_fire_operation/shared/utils/numbers"
 )
 
 type Radar struct {
@@ -66,5 +67,5 @@ func (rd *Radar) GetLocation(distances ...float32) (x, y float32) {
 	y = ((C * D) - (A * F)) / ((B * D) - (A * E))
 	logger.Debug("Y", y)
 
-	return float32(math.Round(float64(x*10))) / 10, float32(math.Round(float64(y*10))) / 10
+	return numbers.RoundDecimals(x, 1), numbers.RoundDecimals(y, 1)
 }
