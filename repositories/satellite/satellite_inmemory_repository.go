@@ -1,4 +1,4 @@
-package repository
+package repositories
 
 import (
 	"github.com/miguelramirez93/quasar_fire_operation/shared/contracts/repository"
