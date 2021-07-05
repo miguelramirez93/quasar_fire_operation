@@ -21,4 +21,10 @@ func TestRadarDomain(t *testing.T) {
 		assert.Equal(t, float32(-100), x)
 		assert.Equal(t, float32(75.6), y)
 	})
+
+	t.Run("Should panic if one or more points are unconsistent", func(t *testing.T) {
+		assert.Panics(t, func() {
+			radar.GetLocation(100, 115.5, 142.7)
+		}, "Should panic as expected")
+	})
 }

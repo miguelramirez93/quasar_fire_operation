@@ -1,11 +1,12 @@
 package domain
 
 import (
+	"fmt"
 	"math"
 
 	"github.com/miguelramirez93/quasar_fire_operation/shared/models"
-	"github.com/miguelramirez93/quasar_fire_operation/shared/utils/logger"
 	"github.com/miguelramirez93/quasar_fire_operation/shared/utils/numbers"
+	valueobjects "github.com/miguelramirez93/quasar_fire_operation/shared/value_objects"
 )
 
 type Radar struct {
@@ -39,33 +40,53 @@ func (rd *Radar) GetLocation(distances ...float32) (x, y float32) {
 
 	// A = (-2x1 + 2x2)
 	A := float32((-2 * x1) + (2 * x2))
-	logger.Debug("A", A)
 
 	//B = (-2y1 + 2y2)
 	B := float32((-2 * y1) + (2 * y2))
-	logger.Debug("B", B)
 
 	//C = (r1^2) - (r2^2) - (x1^2) + (x2^2) - (y1^2) + (y2^2)
 	C := (r1 * r1) - (r2 * r2) - float32(x1*x1) + float32(x2*x2) - float32(y1*y1) + float32(y2*y2)
-	logger.Debug("C", C)
 	//D = (-2x2 + 2x3)
 	D := float32((-2 * x2) + (2 * x3))
-	logger.Debug("D", D)
 	//E = (-2y2 + 2y3)
 	E := float32((-2 * y2) + (2 * y3))
-	logger.Debug("E", E)
-
 	//F = (r2^2) - (r3^2) - (x2^2) + (x3^2) - (y2^2) + (y3^2)
 	F := float32(math.Pow(float64(r2), 2)) - float32(math.Pow(float64(r3), 2)) - float32(math.Pow(float64(x2), 2)) + float32(math.Pow(float64(x3), 2)) - float32(math.Pow(float64(y2), 2)) + float32(math.Pow(float64(y3), 2))
-	logger.Debug("F", F)
 
 	// Formula: x= (CE - FB) / (EA - BD)
 	x = ((C * E) - (F * B)) / ((E * A) - (B * D))
-	logger.Debug("X", x)
 
 	// Formula: y= (CD - AF) / (BD - AE)
 	y = ((C * D) - (A * F)) / ((B * D) - (A * E))
-	logger.Debug("Y", y)
+
+	//check if data is consistent
+	resultCoordenates := valueobjects.CoordinatePair{
+		X: valueobjects.Coordinate(x),
+		Y: valueobjects.Coordinate(y),
+	}
+
+	checkResultPointDistance(&resultCoordenates, valueobjects.CoordinatePair{
+		X: x1,
+		Y: y1,
+	}, r1)
+
+	checkResultPointDistance(&resultCoordenates, valueobjects.CoordinatePair{
+		X: x2,
+		Y: y2,
+	}, r2)
+
+	checkResultPointDistance(&resultCoordenates, valueobjects.CoordinatePair{
+		X: x3,
+		Y: y3,
+	}, r3)
 
 	return numbers.RoundDecimals(x, 1), numbers.RoundDecimals(y, 1)
+}
+
+func checkResultPointDistance(sourceCoordenates *valueobjects.CoordinatePair, pointToCehck valueobjects.CoordinatePair, distance float32) {
+	distanceToX1Y1 := sourceCoordenates.CalculateDistanceTo(pointToCehck)
+
+	if math.Round(float64(distanceToX1Y1)) != math.Round(float64(distance)) {
+		panic(fmt.Sprintf("Point (%f,%f) is not consistent with distance %f", pointToCehck.X, pointToCehck.Y, distance))
+	}
 }
