@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 
+	apperrors "github.com/miguelramirez93/quasar_fire_operation/shared/app_errors"
 	"github.com/miguelramirez93/quasar_fire_operation/shared/models"
 	"github.com/miguelramirez93/quasar_fire_operation/shared/utils/numbers"
 	valueobjects "github.com/miguelramirez93/quasar_fire_operation/shared/value_objects"
@@ -23,7 +24,7 @@ func NewRadar(satellitesData []*models.Satellite) Radar {
 
 func (rd *Radar) GetLocation(distances ...float32) (x, y float32) {
 	if len(distances) > (len(rd.Satellites)) {
-		panic("Number of distances should be same as number of available satellites")
+		panic(apperrors.ErrNumOfDistances.Error())
 	}
 
 	r1 := distances[0]

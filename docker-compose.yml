@@ -1,0 +1,12 @@
+version: "3.5"
+
+services:
+
+  mutant-detector-api:
+    image: local/quasar_fire_operation_api
+    container_name: quasar_fire_operation_api
+    environment: 
+      PORT: 8080
+      HTTP_DOMAIN: "http://localhost:8080"
+    ports: 
+      - 8080:8080

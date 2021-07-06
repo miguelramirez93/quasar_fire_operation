@@ -7,6 +7,12 @@ type Satellite struct {
 	Coordenates valueobjects.CoordinatePair
 }
 
+type SatelliteMessage struct {
+	SatelliteName string                `json:"name"`
+	Distance      valueobjects.Distance `json:"distance"`
+	Message       valueobjects.Message  `json:"message"`
+}
+
 /* type Satellite struct {
 	Name             string                `json:"name"`
 	DistanceToEmisor valueobjects.Distance `json:"distance"`
