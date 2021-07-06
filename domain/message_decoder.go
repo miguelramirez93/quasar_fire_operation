@@ -1,6 +1,8 @@
 package domain
 
-import "errors"
+import (
+	apperrors "github.com/miguelramirez93/quasar_fire_operation/shared/app_errors"
+)
 
 func GetMessage(messages ...[]string) (msg string) {
 	msg, err := decodeMessage(messages...)
@@ -20,7 +22,7 @@ func getAndCheckMessageLen(messages ...[]string) (int, error) {
 	for _, message := range messagesToCompare {
 		currMessageLen := len(message)
 		if currMessageLen != messageLen {
-			return messageLen, errors.New("len mismatch")
+			return messageLen, apperrors.ErrMessageLenMismatch
 		}
 	}
 
@@ -51,7 +53,7 @@ func decodeMessage(messages ...[]string) (string, error) {
 		}
 	}
 
-	return "", errors.New("cannot decode message")
+	return "", apperrors.ErrDecodingMessage
 
 }
 

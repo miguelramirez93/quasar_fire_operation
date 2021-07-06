@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	repositories "github.com/miguelramirez93/quasar_fire_operation/repositories/satellite"
+	apperrors "github.com/miguelramirez93/quasar_fire_operation/shared/app_errors"
 	"github.com/miguelramirez93/quasar_fire_operation/tests/fixtures"
 	"github.com/stretchr/testify/assert"
 )
@@ -17,7 +18,7 @@ func TestDecodeMessageAndSource(t *testing.T) {
 		}
 		_, err := handler.DecodeMessageAndSource(fixtures.SatelliteMessagesUnknowSources)
 		assert.NotNil(t, err)
-		assert.Equal(t, "messages from non registered satellites", err.Error())
+		assert.Equal(t, apperrors.ErrUnknowMessageSource.Error(), err.Error())
 	})
 
 	t.Run("Should return success decoded message", func(t *testing.T) {
