@@ -1,0 +1,115 @@
+definitions:
+  apperrors.DeliveryError:
+    properties:
+      message:
+        type: string
+    type: object
+  models.AddSatelliteMessageReq:
+    properties:
+      distance:
+        type: number
+      message:
+        items:
+          type: string
+        type: array
+    type: object
+  models.DecodeMsgAndSourceReq:
+    properties:
+      satellites:
+        items:
+          $ref: '#/definitions/models.SatelliteMessage'
+        type: array
+    type: object
+  models.SatelliteMessage:
+    properties:
+      distance:
+        type: number
+      message:
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /topsecret:
+    post:
+      consumes:
+      - application/json
+      description: return the message and coordenates for emisor
+      parameters:
+      - description: satellites message data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.DecodeMsgAndSourceReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apperrors.DeliveryError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apperrors.DeliveryError'
+      summary: decode message from multiple sources
+  /topsecret_split:
+    get:
+      consumes:
+      - application/json
+      description: return the message and coordenates for emisor if there is stored
+        messages previusly
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apperrors.DeliveryError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apperrors.DeliveryError'
+      summary: decode message from multiple sources (splited)
+  /topsecret_split/:satellite_name:
+    post:
+      consumes:
+      - application/json
+      description: adds satellite message to data source, if there is a message to
+        the same satellite it will be replaced with this one.
+      parameters:
+      - description: satellite message data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.AddSatelliteMessageReq'
+      - description: satellite name
+        in: path
+        name: satellite_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apperrors.DeliveryError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apperrors.DeliveryError'
+      summary: adds satellite message handler
+swagger: "2.0"

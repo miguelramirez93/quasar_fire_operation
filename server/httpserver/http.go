@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
+	"github.com/miguelramirez93/quasar_fire_operation/config"
 )
 
 // @title Test API
@@ -18,7 +19,7 @@ func HTTPInitServer() {
 
 	HTTPInitHandlers(router)
 
-	serverPort := "8080"
+	serverPort := config.HTTPPort
 
 	router.Run(fmt.Sprintf(":%s", serverPort))
 }

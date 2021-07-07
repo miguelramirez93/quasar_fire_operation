@@ -5,7 +5,15 @@ import (
 	"github.com/miguelramirez93/quasar_fire_operation/shared/models"
 )
 
+var (
+	satelliteMsgRepoInstance *repository.SatelliteMessageRepository
+)
+
 func GetSatelliteMessageRepository() *repository.SatelliteMessageRepository {
+	if satelliteMsgRepoInstance != nil {
+		return satelliteMsgRepoInstance
+	}
 	repo := NewSatelliteMessageInmemoryRepository([]*models.SatelliteMessage{})
-	return &repo
+	satelliteMsgRepoInstance = &repo
+	return satelliteMsgRepoInstance
 }

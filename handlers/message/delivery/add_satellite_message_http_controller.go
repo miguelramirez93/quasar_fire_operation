@@ -13,9 +13,9 @@ type AddSatelliteMessageHttpController struct {
 	Handler messagehandler.AddSatelliteMessageHandler
 }
 
-func NewAddSatelliteMessageHttpController(r *gin.Engine, handler messagehandler.AddSatelliteMessageHandler) {
+func NewAddSatelliteMessageHttpController(r *gin.Engine) {
 	controller := &AddSatelliteMessageHttpController{
-		Handler: handler,
+		Handler: messagehandler.NewAddSatelliteMessageHandler(),
 	}
 
 	r.POST("/topsecret_split/:satellite_name", controller.AddSatelliteMessage)
@@ -27,6 +27,7 @@ func NewAddSatelliteMessageHttpController(r *gin.Engine, handler messagehandler.
 // @Accept  json
 // @Produce  json
 // @Param body body models.AddSatelliteMessageReq true "satellite message data"
+// @Param satellite_name path string true "satellite name"
 // @Success 200
 // @Failure 403 {object} apperrors.DeliveryError
 // @Failure 404 {object} apperrors.DeliveryError

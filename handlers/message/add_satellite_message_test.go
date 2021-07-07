@@ -21,7 +21,7 @@ func TestAddSatelliteMessageHandler(t *testing.T) {
 			satelliteMessageRepository: satelliteMessageRepositoryinstance,
 			satelliteRepository:        satelliteRepositoryInstance,
 		}
-		_, err := handler.AddSatelliteMessage(fixtures.SatelliteMessagesUnknowSources[0])
+		_, err := handler.AddSatelliteMessage(*fixtures.SatelliteMessagesUnknowSources[0])
 		assert.NotNil(t, err)
 		assert.Equal(t, apperrors.ErrUnknowMessageSource.Error(), err.Error())
 	})
@@ -33,8 +33,8 @@ func TestAddSatelliteMessageHandler(t *testing.T) {
 			satelliteMessageRepository: satelliteMessageRepositoryinstance,
 			satelliteRepository:        satelliteRepositoryInstance,
 		}
-		addedMessage, err := handler.AddSatelliteMessage(fixtures.SatelliteMessagesSuccess.Messages[0])
+		addedMessage, err := handler.AddSatelliteMessage(*fixtures.SatelliteMessagesSuccess.Messages[0])
 		assert.Nil(t, err)
-		assert.Equal(t, fixtures.SatelliteMessagesSuccess.Messages[0], *addedMessage)
+		assert.Equal(t, *fixtures.SatelliteMessagesSuccess.Messages[0], *addedMessage)
 	})
 }

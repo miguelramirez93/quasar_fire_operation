@@ -21,7 +21,7 @@ func NewDecodeMessageAndSourceHandler() DecodeMessageAndSourceHandler {
 	}
 }
 
-func (d *DecodeMessageAndSourceHandler) areMessagesFromRegisteredSatellites(satelliteMessages []models.SatelliteMessage) bool {
+func (d *DecodeMessageAndSourceHandler) areMessagesFromRegisteredSatellites(satelliteMessages []*models.SatelliteMessage) bool {
 	for _, satelliteMessage := range satelliteMessages {
 		if d.satelliteRepository.GetSatelliteByName(satelliteMessage.SatelliteName) == nil {
 			return false
@@ -30,7 +30,7 @@ func (d *DecodeMessageAndSourceHandler) areMessagesFromRegisteredSatellites(sate
 	return true
 }
 
-func (d *DecodeMessageAndSourceHandler) DecodeMessageAndSource(satelliteMessages []models.SatelliteMessage) (msg models.DecodedMessage, err error) {
+func (d *DecodeMessageAndSourceHandler) DecodeMessageAndSource(satelliteMessages []*models.SatelliteMessage) (msg models.DecodedMessage, err error) {
 
 	if !d.areMessagesFromRegisteredSatellites(satelliteMessages) {
 		err := apperrors.ErrUnknowMessageSource

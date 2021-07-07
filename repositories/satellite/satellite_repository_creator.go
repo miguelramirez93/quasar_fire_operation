@@ -5,7 +5,15 @@ import (
 	"github.com/miguelramirez93/quasar_fire_operation/tests/fixtures"
 )
 
+var (
+	satelliteRepoInstance *repository.SatelliteRepository
+)
+
 func GetSatelliteRepository() *repository.SatelliteRepository {
+	if satelliteRepoInstance != nil {
+		return satelliteRepoInstance
+	}
 	repo := NewSatelliteInmemoryRepository(fixtures.SatelliteDataSample)
-	return &repo
+	satelliteRepoInstance = &repo
+	return satelliteRepoInstance
 }

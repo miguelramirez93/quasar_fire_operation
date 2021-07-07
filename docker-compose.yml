@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
 
-  mutant-detector-api:
+  quasar-fire-operation-api:
     image: local/quasar_fire_operation_api
     container_name: quasar_fire_operation_api
     environment: 

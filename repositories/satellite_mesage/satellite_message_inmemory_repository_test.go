@@ -24,4 +24,21 @@ func TestSateliteMessageInMemoryRepo(t *testing.T) {
 
 	})
 
+	t.Run("Should Remove all data", func(t *testing.T) {
+		repositoryinstance := NewSatelliteMessageInmemoryRepository([]*models.SatelliteMessage{})
+
+		_, err := repositoryinstance.AddSatelliteMessage(models.SatelliteMessage{
+			SatelliteName: "kenobi",
+			Distance:      valueobjects.Distance(100),
+			Message:       valueobjects.Message{"", "", "message"},
+		})
+
+		assert.Nil(t, err)
+		err = repositoryinstance.CleanSatelliteMessages()
+		assert.Nil(t, err)
+		allSatelliteMessages, _ := repositoryinstance.GetSatelliteMessages()
+		assert.Equal(t, 0, len(allSatelliteMessages))
+
+	})
+
 }

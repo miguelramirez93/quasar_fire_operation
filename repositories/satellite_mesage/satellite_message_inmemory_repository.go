@@ -48,3 +48,19 @@ func (r *SatelliteMessageInMemoryRepository) AddSatelliteMessage(satelliteMessag
 	}()
 	return
 }
+
+func (r *SatelliteMessageInMemoryRepository) CleanSatelliteMessages() (err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			switch recoverError := r.(type) {
+			case string:
+				err = errors.New(recoverError)
+			default:
+				err = errors.New("unknow error")
+			}
+		}
+	}()
+	r.MappedSatelliteMessageData = make(map[string]*models.SatelliteMessage)
+	r.SatelliteMessageData = []*models.SatelliteMessage{}
+	return
+}
