@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.com/miguelramirez93/quasar_fire_operation.svg?branch=master)](https://travis-ci.com/miguelramirez93/quasar_fire_operation)
 
+[![Coverage Status](https://coveralls.io/repos/github/miguelramirez93/quasar_fire_operation/badge.svg?branch=master)](https://coveralls.io/github/miguelramirez93/quasar_fire_operation?branch=master)
+
 # quasar_fire_operation
 
 go libs used:
