@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/miguelramirez93/quasar_fire_operation/domain"
+	repositories "github.com/miguelramirez93/quasar_fire_operation/repositories/satellite"
 	apperrors "github.com/miguelramirez93/quasar_fire_operation/shared/app_errors"
 	"github.com/miguelramirez93/quasar_fire_operation/shared/contracts/repository"
 	"github.com/miguelramirez93/quasar_fire_operation/shared/models"
@@ -14,9 +15,9 @@ type DecodeMessageAndSourceHandler struct {
 	satelliteRepository repository.SatelliteRepository
 }
 
-func NewDecodeMessageAndSourceHandler(satelliteRepo repository.SatelliteRepository) DecodeMessageAndSourceHandler {
+func NewDecodeMessageAndSourceHandler() DecodeMessageAndSourceHandler {
 	return DecodeMessageAndSourceHandler{
-		satelliteRepository: satelliteRepo,
+		satelliteRepository: *repositories.GetSatelliteRepository(),
 	}
 }
 
