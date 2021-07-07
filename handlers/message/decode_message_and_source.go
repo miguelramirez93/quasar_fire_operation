@@ -8,6 +8,7 @@ import (
 	apperrors "github.com/miguelramirez93/quasar_fire_operation/shared/app_errors"
 	"github.com/miguelramirez93/quasar_fire_operation/shared/contracts/repository"
 	"github.com/miguelramirez93/quasar_fire_operation/shared/models"
+	"github.com/miguelramirez93/quasar_fire_operation/shared/utils/logger"
 	valueobjects "github.com/miguelramirez93/quasar_fire_operation/shared/value_objects"
 )
 
@@ -51,8 +52,10 @@ func (d *DecodeMessageAndSourceHandler) DecodeMessageAndSource(satelliteMessages
 		if r := recover(); r != nil {
 			switch recoverError := r.(type) {
 			case string:
+				logger.Error("Error decoding messages", recoverError)
 				err = errors.New(recoverError)
 			default:
+				logger.Error("Error decoding messages", recoverError)
 				err = errors.New("unknow error")
 			}
 		}

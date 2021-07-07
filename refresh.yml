@@ -17,7 +17,7 @@ build_delay: 200ms
 # If you have a specific sub-directory of your project you want to build.
 build_target_path : "."
 # What you would like to name the built binary.
-binary_name: mutant_detector
+binary_name: quasar_fire_operation
 # Extra command line flags you want passed to the built binary when running it.
 command_flags: ["--env", "development"]
 # Extra environment variables you want defined when the built binary is run.
