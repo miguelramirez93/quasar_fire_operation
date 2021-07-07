@@ -20,4 +20,4 @@ After your environment is ready, you can navigate to:
 
 
 current deployed env:
-- https://localhost:8080/swagger/index.html
+- https://quasar-fire-operation-ml.herokuapp.com/swagger/index.html
