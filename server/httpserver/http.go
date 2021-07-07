@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/miguelramirez93/quasar_fire_operation/config"
+	"github.com/miguelramirez93/quasar_fire_operation/shared/utils/logger"
 )
 
 // @title Test API
@@ -14,12 +14,11 @@ import (
 // @BasePath /
 
 // HTTPInitServer init http delivery server
-func HTTPInitServer() {
+func HTTPInitServer(port string) {
+	logger.Info("starting http server", port)
 	router := gin.Default()
-
 	HTTPInitHandlers(router)
 
-	serverPort := config.HTTPPort
-
-	router.Run(fmt.Sprintf(":%s", serverPort))
+	router.Run(fmt.Sprintf(":%s", port))
+	logger.Info("Server successfully started")
 }

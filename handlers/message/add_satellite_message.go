@@ -6,6 +6,7 @@ import (
 	apperrors "github.com/miguelramirez93/quasar_fire_operation/shared/app_errors"
 	"github.com/miguelramirez93/quasar_fire_operation/shared/contracts/repository"
 	"github.com/miguelramirez93/quasar_fire_operation/shared/models"
+	"github.com/miguelramirez93/quasar_fire_operation/shared/utils/logger"
 )
 
 type AddSatelliteMessageHandler struct {
@@ -27,6 +28,7 @@ func (h *AddSatelliteMessageHandler) isMessageFromRegisteredSatellites(satellite
 func (h *AddSatelliteMessageHandler) AddSatelliteMessage(satelliteMessageData models.SatelliteMessage) (*models.SatelliteMessage, error) {
 	if !h.isMessageFromRegisteredSatellites(satelliteMessageData) {
 		err := apperrors.ErrUnknowMessageSource
+		logger.Error("error adding satellite message", err)
 		return nil, err
 	}
 
