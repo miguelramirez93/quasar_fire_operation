@@ -1,0 +1,11 @@
+language: go
+
+go:
+  - 1.13.x
+  - 1.15.x
+  - 1.16.x
+
+script: 
+  - go test -v -cover ./...
+  - go test ./... -coverprofile cover.out
+  - go tool cover -func cover.out
