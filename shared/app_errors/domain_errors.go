@@ -7,4 +7,5 @@ var (
 	ErrMessageLenMismatch  = errors.New("message-len-mistmatch")
 	ErrDecodingMessage     = errors.New("error-decoding-message")
 	ErrUnknowMessageSource = errors.New("unknow-satellite")
+	ErrUncompleteMsg       = errors.New("uncomplete-messages")
 )

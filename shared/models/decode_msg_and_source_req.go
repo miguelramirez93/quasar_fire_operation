@@ -1,5 +1,5 @@
 package models
 
 type DecodeMsgAndSourceReq struct {
-	Satellites []SatelliteMessage `json:"satellites"`
+	Satellites []*SatelliteMessage `json:"satellites"`
 }

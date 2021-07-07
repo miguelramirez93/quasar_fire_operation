@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	SatelliteMessagesUnknowSources = []models.SatelliteMessage{
+	SatelliteMessagesUnknowSources = []*models.SatelliteMessage{
 		{
 			SatelliteName: "non_exist",
 			Distance:      valueobjects.Distance(100),
@@ -15,12 +15,12 @@ var (
 	}
 
 	SatelliteMessagesSuccess = struct {
-		Messages       []models.SatelliteMessage
+		Messages       []*models.SatelliteMessage
 		X              float32
 		Y              float32
 		DecodedMessage string
 	}{
-		Messages: []models.SatelliteMessage{
+		Messages: []*models.SatelliteMessage{
 			{
 				SatelliteName: "kenobi",
 				Distance:      valueobjects.Distance(485.67),
@@ -42,7 +42,7 @@ var (
 		Y:              75.6,
 	}
 
-	SatelliteMessagesOutOfRange = []models.SatelliteMessage{
+	SatelliteMessagesOutOfRange = []*models.SatelliteMessage{
 		{
 			SatelliteName: "kenobi",
 			Distance:      valueobjects.Distance(100),

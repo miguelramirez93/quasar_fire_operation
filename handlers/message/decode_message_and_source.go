@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/miguelramirez93/quasar_fire_operation/domain"
+	repositories "github.com/miguelramirez93/quasar_fire_operation/repositories/satellite"
 	apperrors "github.com/miguelramirez93/quasar_fire_operation/shared/app_errors"
 	"github.com/miguelramirez93/quasar_fire_operation/shared/contracts/repository"
 	"github.com/miguelramirez93/quasar_fire_operation/shared/models"
@@ -14,13 +15,13 @@ type DecodeMessageAndSourceHandler struct {
 	satelliteRepository repository.SatelliteRepository
 }
 
-func NewDecodeMessageAndSourceHandler(satelliteRepo repository.SatelliteRepository) DecodeMessageAndSourceHandler {
+func NewDecodeMessageAndSourceHandler() DecodeMessageAndSourceHandler {
 	return DecodeMessageAndSourceHandler{
-		satelliteRepository: satelliteRepo,
+		satelliteRepository: *repositories.GetSatelliteRepository(),
 	}
 }
 
-func (d *DecodeMessageAndSourceHandler) areMessagesFromRegisteredSatellites(satelliteMessages []models.SatelliteMessage) bool {
+func (d *DecodeMessageAndSourceHandler) areMessagesFromRegisteredSatellites(satelliteMessages []*models.SatelliteMessage) bool {
 	for _, satelliteMessage := range satelliteMessages {
 		if d.satelliteRepository.GetSatelliteByName(satelliteMessage.SatelliteName) == nil {
 			return false
@@ -29,7 +30,7 @@ func (d *DecodeMessageAndSourceHandler) areMessagesFromRegisteredSatellites(sate
 	return true
 }
 
-func (d *DecodeMessageAndSourceHandler) DecodeMessageAndSource(satelliteMessages []models.SatelliteMessage) (msg models.DecodedMessage, err error) {
+func (d *DecodeMessageAndSourceHandler) DecodeMessageAndSource(satelliteMessages []*models.SatelliteMessage) (msg models.DecodedMessage, err error) {
 
 	if !d.areMessagesFromRegisteredSatellites(satelliteMessages) {
 		err := apperrors.ErrUnknowMessageSource

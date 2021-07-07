@@ -1,19 +1,25 @@
 package httpserver
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
-	messagehandler "github.com/miguelramirez93/quasar_fire_operation/handlers/message"
+	"github.com/miguelramirez93/quasar_fire_operation/config"
 	"github.com/miguelramirez93/quasar_fire_operation/handlers/message/delivery"
-	repositories "github.com/miguelramirez93/quasar_fire_operation/repositories/satellite"
-	"github.com/miguelramirez93/quasar_fire_operation/tests/fixtures"
+	_ "github.com/miguelramirez93/quasar_fire_operation/server/httpserver/docs"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+func HTTPInitDocumentation(r *gin.Engine) {
+	baseURL := config.HTTPDomain
+	url := ginSwagger.URL(fmt.Sprintf("%s/swagger/doc.json", baseURL))
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
+}
+
 func HTTPInitHandlers(r *gin.Engine) {
-	//repositories
-	satelliteRepository := repositories.NewSatelliteInmemoryRepository(fixtures.SatelliteDataSample)
-	//decode_message_and_source
-	decodeMessageAndSourceHandler := messagehandler.NewDecodeMessageAndSourceHandler(satelliteRepository)
-
-	delivery.NewDecodeMessageAndSourceHttpController(r, decodeMessageAndSourceHandler)
-
+	delivery.NewDecodeMessageAndSourceHttpController(r)
+	delivery.NewAddSatelliteMessageHttpController(r)
+	delivery.NewDecodeSplitedMessageAndSource(r)
+	HTTPInitDocumentation(r)
 }

@@ -13,9 +13,9 @@ type DecodeMessageAndSourceHttpController struct {
 	Handler messagehandler.DecodeMessageAndSourceHandler
 }
 
-func NewDecodeMessageAndSourceHttpController(r *gin.Engine, handler messagehandler.DecodeMessageAndSourceHandler) {
+func NewDecodeMessageAndSourceHttpController(r *gin.Engine) {
 	controller := &DecodeMessageAndSourceHttpController{
-		Handler: handler,
+		Handler: messagehandler.NewDecodeMessageAndSourceHandler(),
 	}
 
 	r.POST("/topsecret", controller.DecodeMessageAndSource)
