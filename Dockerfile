@@ -10,7 +10,7 @@ RUN go get ./...
 RUN go test -cover ./...
 RUN go test ./... -coverprofile cover.out
 RUN go tool cover -func cover.out
-RUN swag init
+RUN swag init --output ./server/httpserver/docs
 
 FROM src as dev
 CMD ["refresh", "run"]
